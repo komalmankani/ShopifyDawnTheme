@@ -43,6 +43,7 @@ if (!customElements.get('product-form')) {
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then((response) => {
+           
             if (response.status) {
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',
@@ -60,7 +61,29 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-              window.location = window.routes.cart_url;
+               if(FreeProductId != undefined)
+            {
+                let formData = {
+                'items': [{
+                'id': FreeProductId,
+                'quantity': 1
+                }]
+                };
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                })
+                .then(response => {
+                window.location = window.routes.cart_url;
+                return response.json();
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+            }
               return;
             }
 
