@@ -1,8 +1,28 @@
+<section>
+  <div class="">
+    <video controls poster="{{ section.settings.poster_image }}">
+      <source src="{{ section.settings.video_link }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Custom Video",
+  "settings": [
+    {
+      "type" : "image_picker",
+      "id" : "poster_image",
+      "label" : "Poster Image"
+    },
+    {
+      "type" : "url",
+      "id" : "video_link",
+      "label" : "Video Link"
+    }
+  ]
+}
 {% endschema %}
 
 {% stylesheet %}
